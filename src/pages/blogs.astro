@@ -4,10 +4,6 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 
-// Use Astro.glob() to fetch all posts, and then sort them by date.
-const posts = (await Astro.glob('./blogs/*.{md,mdx}')).sort(
-	(a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf()
-);
 ---
 
 <!DOCTYPE html>
@@ -34,8 +30,9 @@ const posts = (await Astro.glob('./blogs/*.{md,mdx}')).sort(
 		<Header />
 		<main>
 			<section>
-				<a href="./blogs/basic">基础知识</a>
-				<a href='./'></a>
+				<a href="./blogs/basics">基础知识</a>
+				<a href='./blogs/interviews'>八股文</a>
+				<a href="./blogs/handwritings">手写代码</a>
 			</section>
 		</main>
 		<Footer />
