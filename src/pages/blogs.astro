@@ -29,7 +29,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 	<body>
 		<Header />
 		<main>
-			<section>
+			<section class="category">
 				<a href="./blogs/basics">基础知识</a>
 				<a href='./blogs/interviews'>八股文</a>
 				<a href="./blogs/handwritings">手写代码</a>
@@ -38,3 +38,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 		<Footer />
 	</body>
 </html>
+
+<style>
+	.category {
+		display: flex;
+		flex-direction: column;
+		line-height: 50px;
+	}
+</style>
