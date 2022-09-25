@@ -77,7 +77,7 @@ node.js + express
 2. `npm i express` 下载express框架
 3. 键入测试代码：
 
-    ```node
+    ```Javascript
     //1. 引入express
     const express = require('express')
 
@@ -102,7 +102,7 @@ node.js + express
 4. 本地输入 `localhost:8000` 查看到页面中出现 hello
 5. 打开网络，查看当前请求到**标头**、**预览**、**响应**
 
-## 前后端业务处理
+## GET 请求
 
 ### 前端
 
@@ -133,7 +133,7 @@ node.js + express
             // 1. 创建对象
             const xhr = new XMLHttpRequest()
             // 2. 设置请求方法和URL
-            xhr.open('GET','http://localhost:8000/server')
+            xhr.open('GET','http://localhost:8000/server?a=1&b=2&c=3')
             // 3. 发送请求
             xhr.send()
             // 4. 事件绑定 处理服务端返回到结果
@@ -168,7 +168,7 @@ node.js + express
 
 修改上述代码，如下：
 
-```node
+```Javascript
     //1. 引入express
     const express = require('express')
 
@@ -190,4 +190,25 @@ node.js + express
     app.listen(8000,()=>{
         console.log("服务已经启动，在8000端口监听")
     })
+```
+
+## POST 请求
+
+### 前端
+
+```Javascript
+const xhr = XMLHttpRequest()
+xhr.open('POST','http://localhost:8000/server')
+xhr.send('a=1&b=2&c=3')
+```
+
+### 后端
+
+```Javascript
+app.post('/server',(request,response)=>{
+    // 设置响应头 允许跨域
+    response.setHeader('Access-Control-Allow-Origin','*')
+    // 设置响应体
+    response.send("hello AJAX POST")
+})
 ```
