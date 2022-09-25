@@ -1,6 +1,13 @@
 ---
 import Categories from "../../../layouts/Categories.astro"
+const posts = await Astro.glob('./contents/*.md')
 ---
 <Categories>
-    basic
+    {
+        posts.map((item) => (
+            <div>
+                <a href={item.url}>{item.url.split('/').at(-1)}</a>
+            </div>
+        ))
+    }
 </Categories>
