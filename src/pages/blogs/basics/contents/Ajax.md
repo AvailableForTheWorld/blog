@@ -61,13 +61,15 @@ layout: '../../../../layouts/BlogPost.astro'
 
 # Ajax 案例
 
-## 后端
+## 项目初始化
 
-### 技术栈
+### 后端
+
+#### 技术栈
 
 node.js + express
 
-### 初次使用
+#### 初次使用
 
 终端键入：
 
@@ -100,3 +102,92 @@ node.js + express
 4. 本地输入 `localhost:8000` 查看到页面中出现 hello
 5. 打开网络，查看当前请求到**标头**、**预览**、**响应**
 
+## 前后端业务处理
+
+### 前端
+
+1. 使用按钮控制发送 Ajax请求
+2. 下方文本框接受内容
+
+代码如下：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX GET 请求</title>
+</head>
+<body>
+    <button class="btn">发送GET</button>
+    <div id="result"></div>
+    <script>
+        // 获取button元素
+        const btn = document.querySelector('.btn')
+        // 获取result文本框
+        const res = document.getElementById('result')
+        // 绑定事件
+        btn.onclick = function(){
+            // 1. 创建对象
+            const xhr = new XMLHttpRequest()
+            // 2. 设置请求方法和URL
+            xhr.open('GET','http://localhost:8000/server')
+            // 3. 发送请求
+            xhr.send()
+            // 4. 事件绑定 处理服务端返回到结果
+            // on 事件状态 when 当...时候
+            // readystate 是shr的属性，表示xhr对象状态，有 0 初始化对象 1 已open 2 已发送请求 3 部分数据返回 4 全部数据返回 五种状态
+            // change 改变 对应上述有四次改变
+            xhr.onreadystatechange = function(){
+                // 判断（服务端返回了全部数据）
+                if(xhr.readyState === 4){
+                    // 判断响应状态码是否成功
+                    if(xhr.status >= 200 && xhr.status <300) {
+                        // 处理结果 行 头 空行 体
+                        console.log(xhr)
+                        // 1. 响应行
+                        console.log(xhr.status) // 状态码
+                        console.log(xhr.statusText) // 状态字符串
+                        // 2. 响应头
+                        console.log(xhr.getAllResponseHeaders()) //所有响应头
+                        // 3. 响应体
+                        console.log(xhr.response) // 响应体
+                    res.innerHTML = xhr.response
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+```
+
+### 后端
+
+修改上述代码，如下：
+
+```node
+    //1. 引入express
+    const express = require('express')
+
+    //2. 创建应用对象
+    const app = express()
+
+    /* 
+        3. 创建路由规则
+        request 是对请求报文对封装
+        response 是对响应报文对封装 
+    */
+    // 修改路由地址
+    app.get('/server',(request,response)=>{
+
+        response.send("hello express")
+    })
+
+    //4. 监听端口启动服务
+    app.listen(8000,()=>{
+        console.log("服务已经启动，在8000端口监听")
+    })
+```
